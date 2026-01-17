@@ -696,3 +696,33 @@ ipcMain.handle('get-statistics', async (event, fileName = null) => {
     };
   }
 });
+
+// 테마 저장
+ipcMain.handle('save-theme', async (event, themeId) => {
+  try {
+    const configPath = path.join(app.getPath('userData'), 'theme-config.json');
+    fs.writeFileSync(configPath, JSON.stringify({ theme: themeId }), 'utf8');
+    console.log(`테마 저장: ${themeId}`);
+    return { success: true };
+  } catch (error) {
+    console.error('테마 저장 오류:', error);
+    return { success: false, error: error.message };
+  }
+});
+
+// 테마 불러오기
+ipcMain.handle('load-theme', async () => {
+  try {
+    const configPath = path.join(app.getPath('userData'), 'theme-config.json');
+    if (fs.existsSync(configPath)) {
+      const data = fs.readFileSync(configPath, 'utf8');
+      const config = JSON.parse(data);
+      console.log(`테마 불러오기: ${config.theme}`);
+      return { success: true, theme: config.theme };
+    }
+    return { success: true, theme: null };
+  } catch (error) {
+    console.error('테마 불러오기 오류:', error);
+    return { success: false, theme: null };
+  }
+});

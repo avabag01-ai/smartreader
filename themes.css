@@ -1,0 +1,596 @@
+/**
+ * SmartReader - 20 Emotional Themes System
+ * Ultra-lightweight CSS variable-based theme engine
+ * Total size: ~15KB (20 themes in one file!)
+ */
+
+/* ============================================
+   BASE THEME STRUCTURE (CSS Variables)
+   ============================================ */
+
+:root {
+  /* Color Palette */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f5f5;
+  --bg-tertiary: #e8e8e8;
+
+  --text-primary: #333333;
+  --text-secondary: #666666;
+  --text-muted: #999999;
+
+  --accent-primary: #4a90e2;
+  --accent-secondary: #7cb342;
+  --accent-danger: #e53935;
+
+  --border-color: #dddddd;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+
+  /* Gradients */
+  --gradient-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-accent: linear-gradient(90deg, #4a90e2 0%, #7cb342 100%);
+
+  /* Spacing & Effects */
+  --border-radius: 8px;
+  --transition-speed: 0.3s;
+  --shadow-default: 0 2px 8px var(--shadow-color);
+  --shadow-hover: 0 4px 12px var(--shadow-color);
+
+  /* Typography */
+  --font-primary: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-code: 'Monaco', 'Menlo', monospace;
+}
+
+/* ============================================
+   STUDENT THEMES (학생 타겟)
+   ============================================ */
+
+/* 1. Pink Blossom (핑크 블라썸) */
+[data-theme="pink-blossom"] {
+  --bg-primary: #fff5f8;
+  --bg-secondary: #ffe4ec;
+  --bg-tertiary: #ffd4e0;
+
+  --text-primary: #4a2c3d;
+  --text-secondary: #7a5064;
+  --text-muted: #a97d8f;
+
+  --accent-primary: #ff6b9d;
+  --accent-secondary: #ff8fb3;
+  --accent-danger: #ff4757;
+
+  --border-color: #ffb8d0;
+  --shadow-color: rgba(255, 107, 157, 0.15);
+
+  --gradient-bg: linear-gradient(135deg, #ffeef4 0%, #ffe0ea 100%);
+  --gradient-accent: linear-gradient(90deg, #ff6b9d 0%, #ffa6c9 100%);
+}
+
+/* 2. Sky Blue (스카이 블루) */
+[data-theme="sky-blue"] {
+  --bg-primary: #f0f8ff;
+  --bg-secondary: #e1f2ff;
+  --bg-tertiary: #d0ebff;
+
+  --text-primary: #2c3e50;
+  --text-secondary: #546e7a;
+  --text-muted: #90a4ae;
+
+  --accent-primary: #4fc3f7;
+  --accent-secondary: #29b6f6;
+  --accent-danger: #e74c3c;
+
+  --border-color: #b3e5fc;
+  --shadow-color: rgba(79, 195, 247, 0.15);
+
+  --gradient-bg: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  --gradient-accent: linear-gradient(90deg, #4fc3f7 0%, #81d4fa 100%);
+}
+
+/* 3. Grid Paper (모눈종이) */
+[data-theme="grid-paper"] {
+  --bg-primary: #fafafa;
+  --bg-secondary: #f5f5f5;
+  --bg-tertiary: #eeeeee;
+
+  --text-primary: #212121;
+  --text-secondary: #616161;
+  --text-muted: #9e9e9e;
+
+  --accent-primary: #5c6bc0;
+  --accent-secondary: #7e57c2;
+  --accent-danger: #ef5350;
+
+  --border-color: #e0e0e0;
+  --shadow-color: rgba(0, 0, 0, 0.08);
+
+  /* Grid background pattern */
+  background-image:
+    linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* 4. Chalkboard (칠판 테마) */
+[data-theme="chalkboard"] {
+  --bg-primary: #2d3a2e;
+  --bg-secondary: #3a4a3c;
+  --bg-tertiary: #4a5a4c;
+
+  --text-primary: #f0f0e8;
+  --text-secondary: #d8d8d0;
+  --text-muted: #a8a8a0;
+
+  --accent-primary: #7cb342;
+  --accent-secondary: #9ccc65;
+  --accent-danger: #ff6f61;
+
+  --border-color: #5a6a5c;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+
+  --font-primary: 'Comic Sans MS', 'Chalkboard', cursive;
+}
+
+/* 5. Study Lamp (독서실 스탠드) */
+[data-theme="study-lamp"] {
+  --bg-primary: #2a2418;
+  --bg-secondary: #3a3428;
+  --bg-tertiary: #4a4438;
+
+  --text-primary: #fff4e0;
+  --text-secondary: #ffe4b0;
+  --text-muted: #d4c4a0;
+
+  --accent-primary: #ffab40;
+  --accent-secondary: #ffc947;
+  --accent-danger: #ff6b6b;
+
+  --border-color: #5a5448;
+  --shadow-color: rgba(255, 171, 64, 0.2);
+
+  --gradient-bg: radial-gradient(circle at top, #3a3428 0%, #2a2418 100%);
+}
+
+/* ============================================
+   RETRO / HIPSTER THEMES
+   ============================================ */
+
+/* 6. 8-Bit Game (8비트 게임기) */
+[data-theme="8bit-game"] {
+  --bg-primary: #0f380f;
+  --bg-secondary: #1f481f;
+  --bg-tertiary: #2f582f;
+
+  --text-primary: #9bbc0f;
+  --text-secondary: #8bac0f;
+  --text-muted: #7b9c0f;
+
+  --accent-primary: #9bbc0f;
+  --accent-secondary: #8bac0f;
+  --accent-danger: #ff0000;
+
+  --border-color: #306230;
+  --shadow-color: rgba(155, 188, 15, 0.3);
+
+  --font-primary: 'Press Start 2P', 'Courier New', monospace;
+
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* 7. Windows 95 (90년대 윈도우) */
+[data-theme="windows95"] {
+  --bg-primary: #c0c0c0;
+  --bg-secondary: #808080;
+  --bg-tertiary: #a0a0a0;
+
+  --text-primary: #000000;
+  --text-secondary: #404040;
+  --text-muted: #808080;
+
+  --accent-primary: #000080;
+  --accent-secondary: #0000ff;
+  --accent-danger: #ff0000;
+
+  --border-color: #ffffff;
+  --shadow-color: rgba(0, 0, 0, 0.5);
+
+  --border-radius: 0px;
+  --font-primary: 'MS Sans Serif', 'Arial', sans-serif;
+}
+
+/* 8. Cyberpunk Neon (사이버펑크) */
+[data-theme="cyberpunk"] {
+  --bg-primary: #0a0e27;
+  --bg-secondary: #1a1e3f;
+  --bg-tertiary: #2a2e4f;
+
+  --text-primary: #00ffff;
+  --text-secondary: #00ccff;
+  --text-muted: #0099cc;
+
+  --accent-primary: #ff00ff;
+  --accent-secondary: #ff33ff;
+  --accent-danger: #ff0066;
+
+  --border-color: #00ffff;
+  --shadow-color: rgba(0, 255, 255, 0.5);
+
+  --gradient-bg: linear-gradient(135deg, #0a0e27 0%, #1a1e3f 100%);
+
+  text-shadow: 0 0 5px var(--accent-primary);
+}
+
+/* 9. Vintage Typewriter (빈티지 타자기) */
+[data-theme="typewriter"] {
+  --bg-primary: #f4f1e8;
+  --bg-secondary: #e8e5dc;
+  --bg-tertiary: #dcd9d0;
+
+  --text-primary: #2b2b2b;
+  --text-secondary: #5b5b5b;
+  --text-muted: #8b8b8b;
+
+  --accent-primary: #8b4513;
+  --accent-secondary: #a0522d;
+  --accent-danger: #b22222;
+
+  --border-color: #c8c5bc;
+  --shadow-color: rgba(0, 0, 0, 0.15);
+
+  --font-primary: 'Courier Prime', 'Courier New', monospace;
+
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="noise"><feTurbulence baseFrequency="0.9"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.03"/></svg>');
+}
+
+/* ============================================
+   PROFESSIONAL / BUSINESS THEMES
+   ============================================ */
+
+/* 10. Dark Chocolate (다크 초콜릿) */
+[data-theme="dark-chocolate"] {
+  --bg-primary: #2c1810;
+  --bg-secondary: #3c2820;
+  --bg-tertiary: #4c3830;
+
+  --text-primary: #f5e6d3;
+  --text-secondary: #d5c6b3;
+  --text-muted: #b5a693;
+
+  --accent-primary: #d4a574;
+  --accent-secondary: #e4b584;
+  --accent-danger: #e85d4c;
+
+  --border-color: #5c4840;
+  --shadow-color: rgba(212, 165, 116, 0.2);
+}
+
+/* 11. Office White (오피스 화이트) */
+[data-theme="office-white"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #fafafa;
+  --bg-tertiary: #f0f0f0;
+
+  --text-primary: #212121;
+  --text-secondary: #616161;
+  --text-muted: #9e9e9e;
+
+  --accent-primary: #1976d2;
+  --accent-secondary: #2196f3;
+  --accent-danger: #d32f2f;
+
+  --border-color: #e0e0e0;
+  --shadow-color: rgba(0, 0, 0, 0.08);
+
+  --border-radius: 4px;
+}
+
+/* 12. Macintosh Classic (매킨토시) */
+[data-theme="mac-classic"] {
+  --bg-primary: #e8e8e8;
+  --bg-secondary: #d8d8d8;
+  --bg-tertiary: #c8c8c8;
+
+  --text-primary: #000000;
+  --text-secondary: #333333;
+  --text-muted: #666666;
+
+  --accent-primary: #0066cc;
+  --accent-secondary: #3399ff;
+  --accent-danger: #ff3b30;
+
+  --border-color: #b8b8b8;
+  --shadow-color: rgba(0, 0, 0, 0.12);
+
+  --border-radius: 6px;
+  --font-primary: 'Helvetica Neue', 'Helvetica', sans-serif;
+}
+
+/* 13. Minimal Gray (미니멀 그레이) */
+[data-theme="minimal-gray"] {
+  --bg-primary: #fafafa;
+  --bg-secondary: #f5f5f5;
+  --bg-tertiary: #eeeeee;
+
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --text-muted: #8a8a8a;
+
+  --accent-primary: #666666;
+  --accent-secondary: #888888;
+  --accent-danger: #d32f2f;
+
+  --border-color: #e0e0e0;
+  --shadow-color: rgba(0, 0, 0, 0.05);
+
+  --border-radius: 2px;
+}
+
+/* ============================================
+   NATURE / HEALING THEMES
+   ============================================ */
+
+/* 14. Forest Morning (숲속의 아침) */
+[data-theme="forest-morning"] {
+  --bg-primary: #e8f5e9;
+  --bg-secondary: #c8e6c9;
+  --bg-tertiary: #a5d6a7;
+
+  --text-primary: #1b5e20;
+  --text-secondary: #2e7d32;
+  --text-muted: #66bb6a;
+
+  --accent-primary: #4caf50;
+  --accent-secondary: #66bb6a;
+  --accent-danger: #f44336;
+
+  --border-color: #81c784;
+  --shadow-color: rgba(76, 175, 80, 0.15);
+
+  --gradient-bg: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+}
+
+/* 15. Deep Sea (심해 모드) */
+[data-theme="deep-sea"] {
+  --bg-primary: #0d1b2a;
+  --bg-secondary: #1b263b;
+  --bg-tertiary: #29354c;
+
+  --text-primary: #e0fbfc;
+  --text-secondary: #c0d6df;
+  --text-muted: #a0b4bf;
+
+  --accent-primary: #00b4d8;
+  --accent-secondary: #0096c7;
+  --accent-danger: #ff6b6b;
+
+  --border-color: #415a77;
+  --shadow-color: rgba(0, 180, 216, 0.2);
+
+  --gradient-bg: linear-gradient(180deg, #0d1b2a 0%, #1b263b 100%);
+}
+
+/* 16. Sunset Beach (노을 지는 해변) */
+[data-theme="sunset-beach"] {
+  --bg-primary: #fff4e6;
+  --bg-secondary: #ffe0b2;
+  --bg-tertiary: #ffcc80;
+
+  --text-primary: #4e342e;
+  --text-secondary: #6d4c41;
+  --text-muted: #8d6e63;
+
+  --accent-primary: #ff7043;
+  --accent-secondary: #ff8a65;
+  --accent-danger: #e64a19;
+
+  --border-color: #ffab91;
+  --shadow-color: rgba(255, 112, 67, 0.2);
+
+  --gradient-bg: linear-gradient(135deg, #fff4e6 0%, #ffe0b2 100%);
+}
+
+/* 17. Rainy Window (비 오는 창가) */
+[data-theme="rainy-window"] {
+  --bg-primary: #37474f;
+  --bg-secondary: #455a64;
+  --bg-tertiary: #546e7a;
+
+  --text-primary: #eceff1;
+  --text-secondary: #cfd8dc;
+  --text-muted: #b0bec5;
+
+  --accent-primary: #4fc3f7;
+  --accent-secondary: #29b6f6;
+  --accent-danger: #ff7043;
+
+  --border-color: #607d8b;
+  --shadow-color: rgba(79, 195, 247, 0.15);
+
+  /* Rain effect could be added with CSS animation */
+  background-image:
+    linear-gradient(180deg, rgba(255,255,255,0.05) 0%, transparent 100%);
+}
+
+/* ============================================
+   SPECIAL CONCEPT THEMES
+   ============================================ */
+
+/* 18. Akihabara Anime (아키하바라 애니) */
+[data-theme="akihabara"] {
+  --bg-primary: #fff0f5;
+  --bg-secondary: #ffe0f0;
+  --bg-tertiary: #ffd0e5;
+
+  --text-primary: #4a0e4e;
+  --text-secondary: #6a2e6e;
+  --text-muted: #8a4e8e;
+
+  --accent-primary: #ff1493;
+  --accent-secondary: #ff69b4;
+  --accent-danger: #ff0066;
+
+  --border-color: #ffb0d8;
+  --shadow-color: rgba(255, 20, 147, 0.2);
+
+  --gradient-bg: linear-gradient(135deg, #fff0f5 0%, #ffe0f0 100%);
+
+  /* Anime sparkle effects */
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(255,20,147,0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255,105,180,0.1) 0%, transparent 50%);
+}
+
+/* 19. Terminal Hacker (터미널 해커) */
+[data-theme="terminal-hacker"] {
+  --bg-primary: #0c0c0c;
+  --bg-secondary: #1c1c1c;
+  --bg-tertiary: #2c2c2c;
+
+  --text-primary: #00ff00;
+  --text-secondary: #00cc00;
+  --text-muted: #009900;
+
+  --accent-primary: #00ff00;
+  --accent-secondary: #00ffff;
+  --accent-danger: #ff0000;
+
+  --border-color: #003300;
+  --shadow-color: rgba(0, 255, 0, 0.3);
+
+  --font-primary: 'Fira Code', 'Consolas', monospace;
+
+  /* Scanline effect */
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(0, 255, 0, 0.03) 0px,
+    rgba(0, 255, 0, 0.03) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+}
+
+/* 20. Space Station (우주 정거장) */
+[data-theme="space-station"] {
+  --bg-primary: #0a0a1a;
+  --bg-secondary: #1a1a2e;
+  --bg-tertiary: #2a2a3e;
+
+  --text-primary: #e0e0ff;
+  --text-secondary: #c0c0e0;
+  --text-muted: #a0a0c0;
+
+  --accent-primary: #6366f1;
+  --accent-secondary: #818cf8;
+  --accent-danger: #f43f5e;
+
+  --border-color: #3a3a4e;
+  --shadow-color: rgba(99, 102, 241, 0.3);
+
+  --gradient-bg: radial-gradient(circle at center, #1a1a2e 0%, #0a0a1a 100%);
+
+  /* Star field effect */
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(255,255,255,0.1) 0%, transparent 1%),
+    radial-gradient(circle at 90% 80%, rgba(255,255,255,0.1) 0%, transparent 1%),
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.05) 0%, transparent 1%);
+}
+
+/* ============================================
+   THEME APPLICATION TO ELEMENTS
+   ============================================ */
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-primary);
+  transition: all var(--transition-speed) ease;
+}
+
+.panel {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-default);
+}
+
+.panel-header {
+  background: var(--gradient-accent);
+  color: var(--bg-primary);
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+
+button, .btn {
+  background-color: var(--accent-primary);
+  color: var(--bg-primary);
+  border: 1px solid var(--accent-primary);
+  border-radius: var(--border-radius);
+  transition: all var(--transition-speed) ease;
+}
+
+button:hover, .btn:hover {
+  background-color: var(--accent-secondary);
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-1px);
+}
+
+input, textarea, select {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+}
+
+.tab-btn.active {
+  background-color: var(--accent-primary);
+  color: var(--bg-primary);
+}
+
+.mistake-card, .note-card {
+  background-color: var(--bg-tertiary);
+  border-left: 3px solid var(--accent-primary);
+  box-shadow: var(--shadow-default);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-secondary);
+}
+
+/* ============================================
+   PERFORMANCE OPTIMIZATIONS
+   ============================================ */
+
+/* GPU acceleration for smooth transitions */
+.panel, button, .tab-btn {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Reduce repaints */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Optimize animations */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

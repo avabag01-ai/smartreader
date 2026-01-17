@@ -50,6 +50,25 @@ body {
   font-weight: 600;
 }
 
+.theme-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.theme-btn:hover {
+  transform: scale(1.1);
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.theme-btn:active {
+  transform: scale(0.95);
+}
+
 .status-indicator {
   font-size: 12px;
   padding: 4px 12px;

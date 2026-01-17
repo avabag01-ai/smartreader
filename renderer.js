@@ -9,6 +9,9 @@ let chapters = [];
 let currentChapter = null;
 let chaptersCollapsed = false;
 
+// Theme management
+let currentTheme = null;
+
 const chatMessages = document.getElementById('chat-messages');
 const chatInput = document.getElementById('chat-input');
 const sendBtn = document.getElementById('send-btn');
@@ -741,6 +744,61 @@ function backToQuizGenerator() {
   quizAnswers = [];
 }
 
+// Theme Management
+async function loadSavedTheme() {
+  try {
+    const result = await window.electronAPI.loadTheme();
+    if (result.success && result.theme) {
+      currentTheme = result.theme;
+      applyTheme(result.theme);
+      console.log(`✅ Saved theme loaded: ${result.theme}`);
+    } else {
+      console.log('No saved theme found, using default');
+    }
+  } catch (error) {
+    console.error('Failed to load theme:', error);
+  }
+}
+
+function applyTheme(themeId) {
+  if (themeId && themeId !== 'default') {
+    document.body.setAttribute('data-theme', themeId);
+  } else {
+    document.body.removeAttribute('data-theme');
+  }
+}
+
+function openThemeSelector() {
+  const themeSelectorWindow = window.open(
+    'theme-selector.html',
+    'ThemeSelector',
+    'width=1000,height=700,resizable=yes,scrollbars=yes'
+  );
+
+  // Listen for theme selection message
+  window.addEventListener('message', async (event) => {
+    if (event.data.type === 'theme-selected') {
+      const themeId = event.data.themeId;
+      currentTheme = themeId;
+      applyTheme(themeId);
+
+      // Save to Electron storage
+      try {
+        await window.electronAPI.saveTheme(themeId);
+        console.log(`✅ Theme saved: ${themeId}`);
+      } catch (error) {
+        console.error('Failed to save theme:', error);
+      }
+    }
+  });
+}
+
+// Theme button event listener
+const themeSelectorBtn = document.getElementById('theme-selector-btn');
+if (themeSelectorBtn) {
+  themeSelectorBtn.addEventListener('click', openThemeSelector);
+}
+
 window.selectNote = selectNote;
 window.viewMistakeNote = viewMistakeNote;
 window.updateAnswer = updateAnswer;
@@ -748,5 +806,8 @@ window.submitQuiz = submitQuiz;
 window.backToQuizGenerator = backToQuizGenerator;
 window.selectChapter = selectChapter;
 window.selectChapterCard = selectChapterCard;
+
+// Load saved theme on app start
+loadSavedTheme();
 
 init();
