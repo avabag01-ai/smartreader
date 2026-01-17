@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudyPad AI - 로컬 AI 학습 도우미</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <div class="panel left-panel">
+      <div class="panel-header">
+        <h2>🤖 AI 도우미</h2>
+        <div id="ollama-status" class="status-indicator">연결 확인 중...</div>
+      </div>
+
+      <!-- 챕터 메뉴 -->
+      <div id="chapters-panel" class="chapters-panel" style="display: none;">
+        <div class="chapters-header">
+          <span class="chapters-title">📚 챕터</span>
+          <button id="toggle-chapters-btn" class="toggle-btn">▼</button>
+        </div>
+        <div id="chapters-list" class="chapters-list"></div>
+      </div>
+
+      <div id="chat-messages" class="chat-messages"></div>
+      <div class="chat-input-container">
+        <textarea id="chat-input" placeholder="질문을 입력하세요... (Enter로 전송)" rows="1"></textarea>
+        <button id="send-btn" class="send-btn">➤</button>
+      </div>
+    </div>
+
+    <div class="panel center-panel">
+      <div class="panel-header">
+        <h2>📄 학습 센터</h2>
+        <button id="upload-pdf-btn" class="upload-btn">+ PDF 업로드</button>
+      </div>
+
+      <!-- 초기 상태: PDF 업로드 화면 -->
+      <div id="pdf-viewer" class="pdf-viewer">
+        <div class="empty-state">
+          <div class="empty-icon">📑</div>
+          <h3>PDF를 업로드해주세요</h3>
+          <p>상단의 + 버튼을 눌러<br>PDF 문서를 불러올 수 있습니다</p>
+          <button id="upload-pdf-btn-center" class="upload-btn-large">PDF 선택하기</button>
+        </div>
+      </div>
+
+      <!-- 챕터 선택 화면 (PDF 업로드 후) -->
+      <div id="chapter-selection-screen" class="chapter-selection-screen" style="display: none;">
+        <div class="chapter-selection-header">
+          <h2>📚 학습할 챕터를 선택하세요</h2>
+          <p class="chapter-selection-subtitle">챕터를 선택하면 해당 내용에 집중하여 빠르고 정확한 학습이 가능합니다</p>
+        </div>
+        <div id="chapter-cards-grid" class="chapter-cards-grid"></div>
+        <div class="chapter-selection-footer">
+          <button id="start-full-mode-btn" class="full-mode-btn">
+            📖 전체 문서 모드로 시작하기
+          </button>
+        </div>
+      </div>
+
+      <!-- PDF 뷰어 화면 (챕터 선택 후) -->
+      <div id="pdf-content-viewer" class="pdf-content-viewer" style="display: none;">
+        <div class="pdf-viewer-header">
+          <button id="back-to-chapters-btn" class="back-btn">← 챕터 목록으로</button>
+          <div id="current-chapter-info" class="current-chapter-info"></div>
+        </div>
+        <iframe id="pdf-iframe" class="pdf-iframe"></iframe>
+      </div>
+    </div>
+
+    <div class="panel right-panel">
+      <div class="panel-header">
+        <h2>📝 학습 센터</h2>
+        <div class="tab-buttons">
+          <button id="tab-content" class="tab-btn active">본문</button>
+          <button id="tab-quiz" class="tab-btn">문제 풀이</button>
+          <button id="tab-mistakes" class="tab-btn">오답 노트</button>
+          <button id="tab-notes" class="tab-btn">학습 메모</button>
+        </div>
+      </div>
+
+      <!-- 본문 탭 -->
+      <div id="content-tab" class="tab-content active">
+        <div class="content-viewer-wrapper">
+          <div id="selected-content-display" class="selected-content-display">
+            <div class="empty-state-small">
+              <p>📖 좌측 인덱스에서 챕터를 선택하거나</p>
+              <p>오답 노트/학습 메모를 클릭하면</p>
+              <p>관련 본문 내용이 여기에 표시됩니다</p>
+            </div>
+          </div>
+          <div class="content-navigation">
+            <button id="prev-section-btn" class="nav-btn" disabled>← 이전</button>
+            <span id="current-location-info" class="location-info">-</span>
+            <button id="next-section-btn" class="nav-btn" disabled>다음 →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 문제 풀이 탭 -->
+      <div id="quiz-tab" class="tab-content">
+        <div id="quiz-generator" class="quiz-generator">
+          <h3>📝 퀴즈 생성</h3>
+          <div class="filter-group">
+            <label>학습 범위</label>
+            <select id="quiz-range-type">
+              <option value="all">전체 기간</option>
+              <option value="week">최근 1주일</option>
+              <option value="month">최근 1개월</option>
+              <option value="custom">직접 설정</option>
+            </select>
+          </div>
+          <div id="custom-range" class="filter-group" style="display: none;">
+            <label>시작 날짜</label>
+            <input type="date" id="quiz-start-date">
+            <label>종료 날짜</label>
+            <input type="date" id="quiz-end-date">
+          </div>
+          <div class="filter-group">
+            <label>문제 수</label>
+            <input type="number" id="quiz-question-count" value="5" min="3" max="15">
+          </div>
+          <button id="generate-quiz-btn" class="action-btn primary">퀴즈 생성하기</button>
+        </div>
+        <div id="quiz-content" class="quiz-content" style="display: none;"></div>
+        <div id="quiz-results" class="quiz-results" style="display: none;"></div>
+      </div>
+
+      <!-- 오답 노트 탭 (시험 직전 최적화) -->
+      <div id="mistakes-tab" class="tab-content">
+        <div class="panel-actions">
+          <button id="refresh-mistakes-btn" class="action-btn">🔄 새로고침</button>
+          <button id="filter-unresolved-btn" class="action-btn">미해결만 보기</button>
+        </div>
+        <div class="mistakes-stats">
+          <div class="stat-card">
+            <span class="stat-label">총 오답</span>
+            <span id="total-mistakes-count" class="stat-value">0</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">미해결</span>
+            <span id="unresolved-mistakes-count" class="stat-value">0</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">해결률</span>
+            <span id="resolution-rate" class="stat-value">0%</span>
+          </div>
+        </div>
+        <div id="mistakes-list" class="mistakes-list"></div>
+      </div>
+
+      <!-- 학습 메모 탭 -->
+      <div id="notes-tab" class="tab-content">
+        <div class="panel-actions">
+          <button id="new-note-btn" class="action-btn">+ 새 메모</button>
+          <button id="refresh-notes-btn" class="action-btn">🔄 새로고침</button>
+        </div>
+        <div id="notes-list" class="notes-list"></div>
+        <div class="note-editor">
+          <label>학습 메모 작성</label>
+          <div class="note-meta-info">
+            <span id="note-page-info" class="note-info-tag">페이지: -</span>
+            <span id="note-chapter-info" class="note-info-tag">챕터: -</span>
+          </div>
+          <textarea id="note-input" placeholder="학습 내용을 메모하세요..." rows="8"></textarea>
+          <button id="save-note-btn" class="save-note-btn">저장하기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
