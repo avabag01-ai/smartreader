@@ -5,6 +5,19 @@
 
 require('dotenv').config();
 
+/**
+ * Generate random secret for development
+ * In production, this MUST be set in .env
+ */
+function generateRandomSecret() {
+  const isDevelopment = process.env.NODE_ENV === 'development';
+  if (isDevelopment) {
+    console.warn('⚠️  Using generated session secret. Set SESSION_SECRET in .env for production!');
+    return require('crypto').randomBytes(32).toString('hex');
+  }
+  throw new Error('SESSION_SECRET must be set in .env for production');
+}
+
 const config = {
   // AI Configuration
   ai: {
@@ -40,18 +53,6 @@ const config = {
     experimentalFeatures: process.env.ENABLE_EXPERIMENTAL === 'true'
   }
 };
-
-/**
- * Generate random secret for development
- * In production, this MUST be set in .env
- */
-function generateRandomSecret() {
-  if (config.app.isDevelopment) {
-    console.warn('⚠️  Using generated session secret. Set SESSION_SECRET in .env for production!');
-    return require('crypto').randomBytes(32).toString('hex');
-  }
-  throw new Error('SESSION_SECRET must be set in .env for production');
-}
 
 /**
  * Validate required configuration
