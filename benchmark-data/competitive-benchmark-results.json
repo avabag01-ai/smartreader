@@ -1,0 +1,50 @@
+{
+  "timestamp": "2026-01-17T06:06:12.911Z",
+  "testDataSize": "10.00MB",
+  "wordCount": 1776177,
+  "cpuCores": 10,
+  "results": [
+    {
+      "name": "Fuse.js",
+      "duration": 64,
+      "itemsProcessed": 5000,
+      "memoryUsed": 240.75,
+      "memoryIncrease": 50.77,
+      "throughput": 78125
+    },
+    {
+      "name": "Lunr.js",
+      "duration": 178,
+      "itemsProcessed": 10000,
+      "memoryUsed": 108.81,
+      "memoryIncrease": 9.74,
+      "throughput": 56180
+    },
+    {
+      "name": "FlexSearch",
+      "duration": 190,
+      "itemsProcessed": 50000,
+      "memoryUsed": 189.97,
+      "memoryIncrease": 81.14,
+      "throughput": 263158
+    },
+    {
+      "name": "Our Single-Process",
+      "duration": 467,
+      "itemsProcessed": 1797662,
+      "memoryUsed": 223.09,
+      "memoryIncrease": -17.67,
+      "throughput": 3849383
+    },
+    {
+      "name": "Our Multi-Process",
+      "duration": 2150,
+      "itemsProcessed": 1797666,
+      "memoryUsed": 432.06,
+      "memoryIncrease": 208.96,
+      "throughput": 836124,
+      "mode": "parallel",
+      "workers": 9
+    }
+  ]
+}
