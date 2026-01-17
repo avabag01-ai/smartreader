@@ -9,6 +9,8 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "test:indexing": "node test-indexing-system.js",
+    "benchmark": "node benchmark-indexing.js",
+    "benchmark:quick": "node benchmark-indexing.js --quick",
     "build": "electron-builder",
     "dev": "electron . --dev"
   },
