@@ -1,50 +1,45 @@
 {
-  "timestamp": "2026-01-17T05:50:22.172Z",
-  "cpuCores": 10,
+  "ts": "2026-07-12T00:50:22.675Z",
   "results": [
     {
       "size": "small",
-      "textLength": 2400,
-      "wordCount": 501,
-      "singleDuration": 0,
-      "parallelDuration": 47,
-      "speedup": 0,
-      "timeSaved": -47,
-      "improvement": null
+      "chars": 3200,
+      "words": 701,
+      "singleMs": 1,
+      "multiMs": 67,
+      "speedup": 0.01,
+      "improvement": -6600,
+      "workers": 7
     },
     {
       "size": "medium",
-      "textLength": 27000,
-      "wordCount": 5501,
-      "singleDuration": 2,
-      "parallelDuration": 33,
+      "chars": 44500,
+      "words": 8501,
+      "singleMs": 2,
+      "multiMs": 32,
       "speedup": 0.06,
-      "timeSaved": -31,
-      "improvement": -1550
+      "improvement": -1500,
+      "workers": 7
     },
     {
       "size": "large",
-      "textLength": 108000,
-      "wordCount": 20001,
-      "singleDuration": 7,
-      "parallelDuration": 53,
-      "speedup": 0.13,
-      "timeSaved": -46,
-      "improvement": -657.1
+      "chars": 276000,
+      "words": 64001,
+      "singleMs": 16,
+      "multiMs": 82,
+      "speedup": 0.2,
+      "improvement": -412.5,
+      "workers": 7
     },
     {
       "size": "xlarge",
-      "textLength": 310000,
-      "wordCount": 70001,
-      "singleDuration": 14,
-      "parallelDuration": 101,
-      "speedup": 0.14,
-      "timeSaved": -87,
-      "improvement": -621.4
+      "chars": 1770000,
+      "words": 450001,
+      "singleMs": 103,
+      "multiMs": 436,
+      "speedup": 0.24,
+      "improvement": -323.3,
+      "workers": 7
     }
-  ],
-  "summary": {
-    "avgSpeedup": "0.08",
-    "avgImprovement": "-Infinity"
-  }
+  ]
 }
