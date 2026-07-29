@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,34 +8,52 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="themes.css">
 </head>
+
 <body>
   <div class="container">
     <div class="panel left-panel">
-      <div class="panel-header">
-        <h2>🤖 AI 도우미</h2>
-        <div id="ollama-status" class="status-indicator">연결 확인 중...</div>
+      <!-- 좌측 패널 탭 (Gemini vs 목차) -->
+      <div class="panel-tabs" style="padding: 10px; border-bottom: 1px solid #e0e0e0; background: #f8f9fa;">
+        <button id="tab-gemini" class="tab-btn active" style="flex: 1;">🤖 Gemini</button>
+        <button id="tab-chapters" class="tab-btn" style="flex: 1;">📚 목차</button>
       </div>
 
-      <!-- 챕터 메뉴 -->
-      <div id="chapters-panel" class="chapters-panel" style="display: none;">
+      <!-- 1. Gemini WebView (기본 표시) -->
+      <div id="view-gemini" class="panel-content active"
+        style="flex: 1; display: flex; flex-direction: column; overflow: hidden;">
+        <webview id="gemini-webview" src="https://gemini.google.com" partition="persist:gemini" allowpopups
+          style="width: 100%; height: 100%; border: none;">
+        </webview>
+      </div>
+
+      <!-- 2. 목차 리스트 (탭 전환 시 표시) -->
+      <div id="view-chapters" class="panel-content"
+        style="display: none; flex: 1; flex-direction: column; overflow: hidden;">
         <div class="chapters-header">
-          <span class="chapters-title">📚 챕터</span>
-          <button id="toggle-chapters-btn" class="toggle-btn">▼</button>
+          <!-- 목차 헤더 내용은 유지 -->
+          <span class="chapters-title">PDF 챕터 목록</span>
         </div>
-        <div id="chapters-list" class="chapters-list"></div>
-      </div>
-
-      <div id="chat-messages" class="chat-messages"></div>
-      <div class="chat-input-container">
-        <textarea id="chat-input" placeholder="질문을 입력하세요... (Enter로 전송)" rows="1"></textarea>
-        <button id="send-btn" class="send-btn">➤</button>
+        <div id="chapters-list" class="chapters-list" style="flex: 1; overflow-y: auto;"></div>
       </div>
     </div>
 
     <div class="panel center-panel">
       <div class="panel-header">
         <h2>📄 학습 센터</h2>
+        <div class="search-container">
+          <input type="text" id="search-input" placeholder="🔍 PDF 내용 검색..." />
+          <button id="search-btn" class="search-btn">검색</button>
+        </div>
         <button id="upload-pdf-btn" class="upload-btn">+ PDF 업로드</button>
+      </div>
+
+      <!-- 검색 결과 패널 (접을 수 있음) -->
+      <div id="search-results-panel" class="search-results-panel" style="display: none;">
+        <div class="search-results-header">
+          <span id="search-results-title">검색 결과 (0)</span>
+          <button id="toggle-search-results-btn" class="toggle-btn">▼</button>
+        </div>
+        <div id="search-results-content" class="search-results-content"></div>
       </div>
 
       <!-- 초기 상태: PDF 업로드 화면 -->
@@ -61,10 +80,10 @@
         </div>
       </div>
 
-      <!-- PDF 뷰어 화면 (챕터 선택 후) -->
+      <!-- PDF 뷰어 화면 -->
       <div id="pdf-content-viewer" class="pdf-content-viewer" style="display: none;">
         <div class="pdf-viewer-header">
-          <button id="back-to-chapters-btn" class="back-btn">← 챕터 목록으로</button>
+          <button id="back-to-chapters-btn" class="back-btn">← 전체 문서 모드</button>
           <div id="current-chapter-info" class="current-chapter-info"></div>
         </div>
         <iframe id="pdf-iframe" class="pdf-iframe"></iframe>
@@ -105,21 +124,12 @@
       <div id="quiz-tab" class="tab-content">
         <div id="quiz-generator" class="quiz-generator">
           <h3>📝 퀴즈 생성</h3>
-          <div class="filter-group">
-            <label>학습 범위</label>
-            <select id="quiz-range-type">
-              <option value="all">전체 기간</option>
-              <option value="week">최근 1주일</option>
-              <option value="month">최근 1개월</option>
-              <option value="custom">직접 설정</option>
-            </select>
+
+          <div id="current-chapter-quiz-info" class="quiz-info-box" style="display: none;">
+            <p>📚 현재 선택된 챕터에서 퀴즈를 생성합니다</p>
+            <p id="quiz-chapter-name" class="quiz-chapter-name"></p>
           </div>
-          <div id="custom-range" class="filter-group" style="display: none;">
-            <label>시작 날짜</label>
-            <input type="date" id="quiz-start-date">
-            <label>종료 날짜</label>
-            <input type="date" id="quiz-end-date">
-          </div>
+
           <div class="filter-group">
             <label>문제 수</label>
             <input type="number" id="quiz-question-count" value="5" min="3" max="15">
@@ -175,4 +185,5 @@
 
   <script src="renderer.js"></script>
 </body>
+
 </html>

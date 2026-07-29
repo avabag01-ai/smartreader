@@ -21,8 +21,10 @@ function generateRandomSecret() {
 const config = {
   // AI Configuration
   ai: {
-    ollamaHost: process.env.OLLAMA_HOST || 'http://localhost:11434',
-    ollamaModel: process.env.OLLAMA_MODEL || 'llama2',
+    // Google Gemini API (Primary)
+    googleApiKey: process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY,
+
+    // Legacy/Unused
     // If using external AI service (future expansion)
     apiKey: process.env.AI_API_KEY || null,
     apiEndpoint: process.env.AI_API_ENDPOINT || null

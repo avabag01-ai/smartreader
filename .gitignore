@@ -73,3 +73,9 @@ ENV/
 # API keys and secrets
 secrets.json
 config.private.json
+target/
+myenv/
+*.p8
+*.pem
+xcuserdata/
+node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Electron Framework
