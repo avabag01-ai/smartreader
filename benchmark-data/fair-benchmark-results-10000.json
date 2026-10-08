@@ -1,0 +1,58 @@
+{
+  "date": "2026-10-08T14:45:47.958Z",
+  "node": "v18.20.8",
+  "pages": 10000,
+  "wordsPerPage": 300,
+  "rows": [
+    {
+      "engine": "ours",
+      "buildMs": 1027.850792,
+      "heapMB": 69.734619140625,
+      "sizeKB": 9614.3515625,
+      "queryUs": 17.756875,
+      "precision": 1,
+      "recall": 1,
+      "exact": 1
+    },
+    {
+      "engine": "flexsearch",
+      "buildMs": 2280.003291,
+      "heapMB": 80.0318603515625,
+      "sizeKB": 11984.8466796875,
+      "queryUs": 32.431039999999996,
+      "precision": 1,
+      "recall": 1,
+      "exact": 1
+    },
+    {
+      "engine": "lunr",
+      "buildMs": 6566.447,
+      "heapMB": 538.6247787475586,
+      "sizeKB": 43920.8974609375,
+      "queryUs": 1867.5259375,
+      "precision": 1,
+      "recall": 1,
+      "exact": 1
+    },
+    {
+      "engine": "elasticlunr",
+      "buildMs": 4027.743375,
+      "heapMB": 222.7767791748047,
+      "sizeKB": 40207.88671875,
+      "queryUs": 494.016355,
+      "precision": 1,
+      "recall": 1,
+      "exact": 1
+    },
+    {
+      "engine": "fuse",
+      "buildMs": 110.825708,
+      "heapMB": 4.6806182861328125,
+      "sizeKB": 26138.64453125,
+      "queryUs": 36678.924375,
+      "precision": 0.9719319865231584,
+      "recall": 1,
+      "exact": 0.92
+    }
+  ]
+}

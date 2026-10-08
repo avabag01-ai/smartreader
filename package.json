@@ -11,6 +11,7 @@
     "test:indexing": "node test-indexing-system.js",
     "benchmark": "node benchmark-indexing.js",
     "benchmark:competitive": "node competitive-benchmark.js",
+    "benchmark:fair": "node fair-benchmark.js 10000 300",
     "benchmark:all": "npm run benchmark && npm run benchmark:competitive",
     "build": "electron-builder",
     "dev": "electron . --dev"
