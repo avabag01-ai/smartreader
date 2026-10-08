@@ -1,5 +1,7 @@
 # 🎉 SmartReader v1.0.0 배포 완료!
 
+> ⚠️ 2026-10-08: 이 문서의 속도·처리량 비교는 엔진마다 넣은 양과 일이 달랐던 예전 측정이라 순위로 쓸 수 없다. 같은 조건의 실측은 README 의 "성능 지표"(`npm run benchmark:fair`)를 본다.
+
 **배포 시각**: 2026-01-17
 **GitHub**: https://github.com/avabag01-ai/smartreader.git
 **상태**: ✅ **배포 완료**
