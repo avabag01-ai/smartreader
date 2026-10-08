@@ -79,12 +79,22 @@ Space Savings: 32-40% compared to JSON
 
 ### 📊 Performance Metrics
 
-| Metric | Traditional | StudyPad AI | Improvement |
-|--------|-------------|-------------|-------------|
-| Storage | 10 MB | 3-4 MB | **60-70%** ↓ |
-| Search | O(n) | O(1) | **Instant** |
-| Duplication | High | **Zero** | **100%** ↓ |
-| Format Overhead | JSON | TOON | **32%** ↓ |
+Fair benchmark (`npm run benchmark:fair`): every engine gets the same pages, the same amount and the same queries
+(300 single words + 100 two-word AND), checked against the exact answer. Synthetic Zipf corpus, node 18, 10 cores.
+10,000 pages x 300 words (3M words, 16.6 MB):
+
+| Engine | Index (ms) | Memory (MB) | Saved (KB) | Query (µs) | Exact answers |
+|---|---|---|---|---|---|
+| **StudyPad (TOON v2)** | **1,028** | **69.7** | **9,614** | **17.8** | 100% |
+| FlexSearch 0.8 (Exact) | 2,280 | 80.0 | 11,985 | 32.4 | 100% |
+| Elasticlunr 0.9 | 4,028 | 222.8 | 40,208 | 494.0 | 100% |
+| Lunr 2.3 | 6,566 | 538.6 | 43,921 | 1,867.5 | 100% |
+| Fuse.js 7.1 | 111 | 4.7 | 26,139 | 36,678.9 | 92% |
+
+Fuse.js builds no index (it scans every page per query and matches substrings), so its index time and memory are not comparable.
+Our saved size also includes word positions, which the others do not store. Exact keyword search only — no meaning-based search.
+Raw numbers: `benchmark-data/fair-benchmark-results-*.json`. The older `competitive-benchmark.js` gave each engine a different
+amount and a different job, so its ranking is not a fair comparison.
 
 ### 🚀 Features
 
@@ -234,12 +244,20 @@ TOON:  id|word
 
 ### 📊 성능 지표
 
-| 지표 | 기존 시스템 | StudyPad AI | 개선율 |
-|------|------------|-------------|--------|
-| 저장 공간 | 10 MB | 3-4 MB | **60-70%** ↓ |
-| 검색 속도 | O(n) | O(1) | **즉시** |
-| 중복도 | 높음 | **제로** | **100%** ↓ |
-| 포맷 오버헤드 | JSON | TOON | **32%** ↓ |
+공정 벤치마크(`npm run benchmark:fair`): 모든 엔진에 같은 페이지·같은 양·같은 질의(한 단어 300 + 두 단어 AND 100)를 주고
+정답과 비교. 합성 지프 말뭉치, node 18, 10코어. 1만 쪽 x 300단어(300만 단어, 16.6MB):
+
+| 엔진 | 색인(ms) | 메모리(MB) | 저장(KB) | 질의(µs) | 완전 일치 |
+|---|---|---|---|---|---|
+| **StudyPad (TOON v2)** | **1,028** | **69.7** | **9,614** | **17.8** | 100% |
+| FlexSearch 0.8 (Exact) | 2,280 | 80.0 | 11,985 | 32.4 | 100% |
+| Elasticlunr 0.9 | 4,028 | 222.8 | 40,208 | 494.0 | 100% |
+| Lunr 2.3 | 6,566 | 538.6 | 43,921 | 1,867.5 | 100% |
+| Fuse.js 7.1 | 111 | 4.7 | 26,139 | 36,678.9 | 92% |
+
+Fuse.js 는 색인을 만들지 않고(질의마다 전 페이지를 훑고 부분 문자열로 맞춤) 색인 시간·메모리를 비교할 수 없다.
+우리 저장 크기에는 다른 엔진에 없는 단어 위치까지 들어 있다. 정확한 단어 검색만 — 뜻으로 찾는 검색은 아니다.
+원 숫자: `benchmark-data/fair-benchmark-results-*.json`. 예전 `competitive-benchmark.js` 는 엔진마다 양과 일이 달라 순위가 공정하지 않다.
 
 ### 🚀 주요 기능
 
